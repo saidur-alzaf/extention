@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extension.pro.bd — Browser Extension Resources</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f9fa;
+  --surface:#ffffff;
+  --border:#e2e5ea;
+  --border2:#c9cdd4;
+  --text:#111318;
+  --sub:#5a6073;
+  --muted:#9299a8;
+  --accent:#2563eb;
+  --accent-bg:#eff4ff;
+  --accent-border:#bfcfff;
+  --green:#16a34a;
+  --green-bg:#f0fdf4;
+  --orange:#ea8c00;
+  --orange-bg:#fffbeb;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --purple-bg:#f5f3ff;
+  --radius:8px;
+  --radius-lg:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1117;
+    --surface:#181c27;
+    --border:#272c3d;
+    --border2:#333a52;
+    --text:#e8eaf0;
+    --sub:#8b92a8;
+    --muted:#555d78;
+    --accent:#4f83f1;
+    --accent-bg:#172040;
+    --accent-border:#2a3f80;
+    --green:#4ade80;
+    --green-bg:#052e16;
+    --orange:#fbbf24;
+    --orange-bg:#1c1400;
+    --red:#f87171;
+    --purple:#a78bfa;
+    --purple-bg:#1e1433;
+  }
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+a{color:inherit;text-decoration:none}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.page{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  border-right:1px solid var(--border);
+  padding:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  background:var(--surface);
+  display:flex;
+  flex-direction:column;
+}
+.sidebar-logo{
+  padding:18px 16px 14px;
+  border-bottom:1px solid var(--border);
+  font-weight:600;
+  font-size:.95rem;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.sidebar-logo span{color:var(--accent)}
+.logo-dot{
+  width:28px;height:28px;
+  background:var(--accent);
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.75rem;font-weight:700;
+  flex-shrink:0;
+}
+.nav-section{padding:10px 8px 4px}
+.nav-label{
+  font-size:.68rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--muted);
+  padding:0 8px;
+  margin-bottom:4px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 8px;
+  border-radius:6px;
+  font-size:.85rem;
+  color:var(--sub);
+  cursor:pointer;
+  transition:background .12s,color .12s;
+}
+.nav-item:hover{background:var(--bg);color:var(--text)}
+.nav-item.active{background:var(--accent-bg);color:var(--accent);font-weight:500}
+.nav-item .ico{font-size:14px;width:16px;text-align:center;flex-shrink:0}
+.nav-count{
+  margin-left:auto;
+  font-size:.68rem;
+  background:var(--border);
+  color:var(--muted);
+  padding:1px 5px;
+  border-radius:10px;
+}
+
+/* ── MAIN ── */
+.main{overflow-y:auto;min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:10;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:10px 24px;
+  display:flex;align-items:center;gap:12px;
+}
+.search-wrap{
+  flex:1;max-width:400px;
+  position:relative;
+}
+.search-wrap input{
+  width:100%;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:7px 12px 7px 32px;
+  font-size:.85rem;
+  color:var(--text);
+  font-family:inherit;
+  outline:none;
+  transition:border-color .15s;
+}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap input::placeholder{color:var(--muted)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.badge-live{
+  display:flex;align-items:center;gap:5px;
+  font-size:.73rem;font-weight:500;
+  color:var(--green);
+  background:var(--green-bg);
+  padding:4px 9px;border-radius:20px;
+  border:1px solid rgba(22,163,74,.2);
+}
+.badge-live .dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.btn-sm{
+  background:var(--accent);color:#fff;
+  border:none;border-radius:6px;
+  padding:7px 14px;font-size:.8rem;font-weight:500;
+  cursor:pointer;font-family:inherit;
+  transition:opacity .15s;
+  white-space:nowrap;
+}
+.btn-sm:hover{opacity:.88}
+
+/* ── CONTENT SECTIONS ── */
+.section{padding:28px 24px;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-head{margin-bottom:18px}
+.section-head h2{font-size:1rem;font-weight:600;margin-bottom:3px}
+.section-head p{font-size:.82rem;color:var(--sub)}
+
+/* ── QUICK LINKS ── */
+.quicklinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.ql-item{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:12px 14px;
+  display:flex;flex-direction:column;gap:5px;
+  cursor:pointer;transition:border-color .15s,transform .12s;
+  text-decoration:none;
+}
+.ql-item:hover{border-color:var(--border2);transform:translateY(-1px)}
+.ql-item .ql-icon{font-size:18px;margin-bottom:2px}
+.ql-item .ql-name{font-size:.82rem;font-weight:500;color:var(--text)}
+.ql-item .ql-desc{font-size:.73rem;color:var(--muted);line-height:1.4}
+
+/* ── EXTENSION TABLE ── */
+.ext-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filter-btn{
+  font-size:.75rem;font-weight:500;
+  padding:5px 11px;border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--surface);color:var(--sub);
+  cursor:pointer;transition:all .12s;font-family:inherit;
+}
+.filter-btn:hover{border-color:var(--border2);color:var(--text)}
+.filter-btn.on{background:var(--accent-bg);border-color:var(--accent-border);color:var(--accent)}
+
+.ext-table{width:100%;border-collapse:collapse;font-size:.83rem}
+.ext-table th{
+  text-align:left;padding:8px 10px;
+  font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.ext-table td{
+  padding:10px 10px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.ext-table tr:last-child td{border-bottom:none}
+.ext-table tr:hover td{background:var(--bg)}
+.ext-name{font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px}
+.ext-name .eico{font-size:15px}
+.ext-desc{color:var(--sub);font-size:.78rem}
+.tag{
+  display:inline-block;
+  font-size:.68rem;font-weight:500;
+  padding:2px 7px;border-radius:4px;
+}
+.tag-free{background:var(--green-bg);color:var(--green);border:1px solid rgba(22,163,74,.2)}
+.tag-paid{background:var(--orange-bg);color:var(--orange);border:1px solid rgba(234,140,0,.2)}
+.tag-fmm{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(124,58,237,.2)}
+.browser-icons{display:flex;gap:4px;align-items:center}
+.br{font-size:11px;padding:2px 6px;border-radius:3px;background:var(--bg);border:1px solid var(--border);color:var(--sub);font-weight:500}
+.stars{color:var(--orange);font-size:.8rem;letter-spacing:-1px}
+
+/* ── DOCS LIST ── */
+.doc-list{display:flex;flex-direction:column;gap:1px}
+.doc-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:4px;
+  text-decoration:none;
+  transition:border-color .12s;
+}
+.doc-item:hover{border-color:var(--border2)}
+.doc-num{
+  width:24px;height:24px;border-radius:5px;
+  background:var(--accent-bg);
+  border:1px solid var(--accent-border);
+  color:var(--accent);
+  font-size:.72rem;font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.doc-body h4{font-size:.87rem;font-weight:500;margin-bottom:3px;color:var(--text)}
+.doc-body p{font-size:.78rem;color:var(--sub);line-height:1.45}
+.doc-meta{margin-left:auto;text-align:right;flex-shrink:0}
+.doc-time{font-size:.72rem;color:var(--muted)}
+.doc-level{font-size:.68rem;font-weight:500;margin-top:3px}
+.lv-beginner{color:var(--green)}
+.lv-intermediate{color:var(--orange)}
+.lv-advanced{color:var(--red)}
+
+/* ── CODE BLOCK ── */
+.code-wrap{
+  background:#0d1117;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;margin:12px 0 0;
+}
+.code-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 14px;
+  border-bottom:1px solid #21262d;
+  background:#161b22;
+}
+.code-lang{font-size:.7rem;color:#8b949e;font-family:monospace;text-transform:uppercase;letter-spacing:.08em}
+.copy-btn{font-size:.7rem;color:#58a6ff;background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
+pre{padding:14px;font-family:'SFMono-Regular',Consolas,monospace;font-size:.78rem;line-height:1.7;overflow-x:auto;color:#c9d1d9}
+.kw{color:#ff7b72}.str{color:#a5d6ff}.val{color:#79c0ff}.cm{color:#8b949e}.fn{color:#d2a8ff}.prop{color:#ffa657}
+
+/* ── RESOURCES GRID ── */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.res-card{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px;
+  background:var(--surface);
+  text-decoration:none;
+  display:block;
+  transition:border-color .12s;
+}
+.res-card:hover{border-color:var(--border2)}
+.res-card h5{font-size:.85rem;font-weight:500;margin-bottom:4px;color:var(--text)}
+.res-card p{font-size:.76rem;color:var(--sub);line-height:1.45;margin-bottom:8px}
+.res-url{font-size:.72rem;color:var(--accent);display:flex;align-items:center;gap:3px}
+.res-type{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.rt-official{color:var(--accent)}
+.rt-tool{color:var(--purple)}
+.rt-community{color:var(--green)}
+.rt-learning{color:var(--orange)}
+
+/* ── TOOLS CHECKLIST ── */
+.checklist{display:flex;flex-direction:column;gap:8px}
+.cl-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--surface);
+  font-size:.83rem;
+}
+.cl-item .cl-icon{font-size:16px;flex-shrink:0}
+.cl-item .cl-text{flex:1}
+.cl-item .cl-text strong{display:block;font-weight:500;margin-bottom:1px;color:var(--text)}
+.cl-item .cl-text span{font-size:.76rem;color:var(--sub)}
+.cl-link{font-size:.75rem;color:var(--accent);flex-shrink:0}
+
+/* ── NEWSLETTER ── */
+.newsletter{
+  background:var(--accent-bg);
+  border:1px solid var(--accent-border);
+  border-radius:var(--radius-lg);
+  padding:20px 22px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.nl-text h3{font-size:.95rem;font-weight:600;margin-bottom:3px}
+.nl-text p{font-size:.8rem;color:var(--sub)}
+.nl-form{display:flex;gap:8px;flex:1;min-width:220px}
+.nl-form input{
+  flex:1;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;padding:8px 12px;font-size:.82rem;
+  color:var(--text);font-family:inherit;outline:none;
+}
+.nl-form input:focus{border-color:var(--accent)}
+.nl-form input::placeholder{color:var(--muted)}
+
+/* ── FOOTER ── */
+.site-footer{
+  padding:18px 24px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+.site-footer span{font-size:.76rem;color:var(--muted)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:.76rem;color:var(--sub);transition:color .12s}
+.footer-links a:hover{color:var(--text)}
+
+/* ── MOBILE ── */
+@media(max-width:680px){
+  .page{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .ext-table .hide-m{display:none}
+  .quicklinks{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-dot">EX</div>
+    <div>extension<span>.pro.bd</span></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Discover</div>
+    <a class="nav-item active" href="#top">
+      <span class="ico">⊞</span> Overview
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">🔌</span> Extensions
+      <span class="nav-count">500+</span>
+    </a>
+    <a class="nav-item" href="#docs">
+      <span class="ico">📄</span> Build Guides
+    </a>
+    <a class="nav-item" href="#resources">
+      <span class="ico">🔗</span> Official Docs
+    </a>
+    <a class="nav-item" href="#tools">
+      <span class="ico">🛠️</span> Dev Tools
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Categories</div>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">⚡</span> Productivity
+      <span class="nav-count">98</span>
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">🛠</span> Developer
+      <span class="nav-count">142</span>
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">🔒</span> Privacy
+      <span class="nav-count">76</span>
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">🎨</span> Design
+      <span class="nav-count">54</span>
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">🤖</span> AI
+      <span class="nav-count">41</span>
+    </a>
+    <a class="nav-item" href="#extensions">
+      <span class="ico">📖</span> Research
+      <span class="nav-count">63</span>
+    </a>
+  </div>
+
+  <div class="nav-section" style="margin-top:auto;padding-top:12px">
+    <div class="nav-label">Site</div>
+    <a class="nav-item" href="#community">
+      <span class="ico">✉</span> Newsletter
+    </a>
+    <a class="nav-item" href="#">
+      <span class="ico">+</span> Submit Extension
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="top">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search extensions, guides, resources…">
+    </div>
+    <div class="topbar-right">
+      <div class="badge-live"><span class="dot"></span> Live</div>
+      <button class="btn-sm">+ Submit</button>
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="section" id="quicklinks">
+    <div class="section-head">
+      <h2>Quick Access</h2>
+      <p>Jump to the most useful resources</p>
+    </div>
+    <div class="quicklinks">
+      <a class="ql-item" href="https://developer.chrome.com/docs/extensions/" target="_blank" rel="noopener">
+        <span class="ql-icon">📘</span>
+        <span class="ql-name">Chrome Docs</span>
+        <span class="ql-desc">Official MV3 API reference</span>
+      </a>
+      <a class="ql-item" href="https://extensionworkshop.com/" target="_blank" rel="noopener">
+        <span class="ql-icon">🦊</span>
+        <span class="ql-name">Firefox Workshop</span>
+        <span class="ql-desc">Mozilla extension guide</span>
+      </a>
+      <a class="ql-item" href="https://chromewebstore.google.com/" target="_blank" rel="noopener">
+        <span class="ql-icon">🛒</span>
+        <span class="ql-name">Chrome Web Store</span>
+        <span class="ql-desc">Browse & publish</span>
+      </a>
+      <a class="ql-item" href="https://addons.mozilla.org/" target="_blank" rel="noopener">
+        <span class="ql-icon">🦊</span>
+        <span class="ql-name">Firefox Add-ons</span>
+        <span class="ql-desc">Mozilla extension store</span>
+      </a>
+      <a class="ql-item" href="https://wxt.dev/" target="_blank" rel="noopener">
+        <span class="ql-icon">⚡</span>
+        <span class="ql-name">WXT Framework</span>
+        <span class="ql-desc">Modern ext. scaffold</span>
+      </a>
+      <a class="ql-item" href="https://plasmo.com/" target="_blank" rel="noopener">
+        <span class="ql-icon">🚀</span>
+        <span class="ql-name">Plasmo</span>
+        <span class="ql-desc">React-based builder</span>
+      </a>
+      <a class="ql-item" href="https://www.crxcavator.io/" target="_blank" rel="noopener">
+        <span class="ql-icon">🔍</span>
+        <span class="ql-name">CRXcavator</span>
+        <span class="ql-desc">Security risk scanner</span>
+      </a>
+      <a class="ql-item" href="#docs">
+        <span class="ql-icon">📄</span>
+        <span class="ql-name">Build Guide</span>
+        <span class="ql-desc">Start from scratch</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- EXTENSIONS TABLE -->
+  <div class="section" id="extensions">
+    <div class="section-head">
+      <h2>Extension Directory</h2>
+      <p>Curated, security-checked extensions for developers and power users</p>
+    </div>
+    <div class="ext-filters">
+      <button class="filter-btn on" onclick="filterExts(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterExts(this,'developer')">Developer</button>
+      <button class="filter-btn" onclick="filterExts(this,'productivity')">Productivity</button>
+      <button class="filter-btn" onclick="filterExts(this,'privacy')">Privacy</button>
+      <button class="filter-btn" onclick="filterExts(this,'design')">Design</button>
+      <button class="filter-btn" onclick="filterExts(this,'ai')">AI</button>
+    </div>
+    <table class="ext-table" id="extTable">
+      <thead>
+        <tr>
+          <th>Extension</th>
+          <th class="hide-m">Description</th>
+          <th>Price</th>
+          <th class="hide-m">Browsers</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody id="extBody">
+        <tr data-cat="privacy">
+          <td><span class="ext-name"><span class="eico">🦊</span> uBlock Origin</span></td>
+          <td class="hide-m"><span class="ext-desc">Efficient ad & tracker blocker, light on resources</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span><span class="br">Edge</span></div></td>
+          <td><span class="stars">★★★★★</span></td>
+        </tr>
+        <tr data-cat="developer">
+          <td><span class="ext-name"><span class="eico">🔍</span> Wappalyzer</span></td>
+          <td class="hide-m"><span class="ext-desc">Detect tech stack, frameworks & servers on any site</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="developer">
+          <td><span class="ext-name"><span class="eico">📋</span> JSON Formatter</span></td>
+          <td class="hide-m"><span class="ext-desc">Prettify JSON in-browser with syntax highlighting</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★★</span></td>
+        </tr>
+        <tr data-cat="developer">
+          <td><span class="ext-name"><span class="eico">🔌</span> React DevTools</span></td>
+          <td class="hide-m"><span class="ext-desc">Inspect React component trees and state</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★★</span></td>
+        </tr>
+        <tr data-cat="developer">
+          <td><span class="ext-name"><span class="eico">🌐</span> ModHeader</span></td>
+          <td class="hide-m"><span class="ext-desc">Modify HTTP request & response headers</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="productivity">
+          <td><span class="ext-name"><span class="eico">⏱</span> Toggl Track</span></td>
+          <td class="hide-m"><span class="ext-desc">One-click time tracking across 100+ tools</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="productivity">
+          <td><span class="ext-name"><span class="eico">📌</span> OneTab</span></td>
+          <td class="hide-m"><span class="ext-desc">Convert all tabs into a list, reduce memory 95%</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★★</span></td>
+        </tr>
+        <tr data-cat="design">
+          <td><span class="ext-name"><span class="eico">🎨</span> ColorZilla</span></td>
+          <td class="hide-m"><span class="ext-desc">Pick colors from any page, gradient analyzer</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="design">
+          <td><span class="ext-name"><span class="eico">📐</span> VisBug</span></td>
+          <td class="hide-m"><span class="ext-desc">Open-source design debug tools for any website</span></td>
+          <td><span class="tag tag-free">Free</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="privacy">
+          <td><span class="ext-name"><span class="eico">🔐</span> Bitwarden</span></td>
+          <td class="hide-m"><span class="ext-desc">Open-source password manager with auto-fill</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span><span class="br">Edge</span></div></td>
+          <td><span class="stars">★★★★★</span></td>
+        </tr>
+        <tr data-cat="ai">
+          <td><span class="ext-name"><span class="eico">🤖</span> Monica AI</span></td>
+          <td class="hide-m"><span class="ext-desc">GPT-4 & Claude sidebar — summarize, translate, code</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Edge</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+        <tr data-cat="ai">
+          <td><span class="ext-name"><span class="eico">✍️</span> Grammarly</span></td>
+          <td class="hide-m"><span class="ext-desc">AI writing assistant for grammar, tone & clarity</span></td>
+          <td><span class="tag tag-fmm">Freemium</span></td>
+          <td class="hide-m"><div class="browser-icons"><span class="br">Chrome</span><span class="br">Firefox</span><span class="br">Edge</span></div></td>
+          <td><span class="stars">★★★★☆</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BUILD GUIDES -->
+  <div class="section" id="docs">
+    <div class="section-head">
+      <h2>Build Your Own Extension</h2>
+      <p>Step-by-step guides to create Chrome, Firefox and Edge extensions</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-bar">
+        <span class="code-lang">manifest.json — MV3 starter</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      </div>
+      <pre>{
+  <span class="prop">"manifest_version"</span>: <span class="val">3</span>,
+  <span class="prop">"name"</span>: <span class="str">"My Extension"</span>,
+  <span class="prop">"version"</span>: <span class="str">"1.0.0"</span>,
+  <span class="prop">"description"</span>: <span class="str">"What my extension does"</span>,
+  <span class="prop">"permissions"</span>: [<span class="str">"activeTab"</span>, <span class="str">"storage"</span>],
+  <span class="prop">"action"</span>: {
+    <span class="prop">"default_popup"</span>: <span class="str">"popup.html"</span>,
+    <span class="prop">"default_icon"</span>: <span class="str">"icon128.png"</span>
+  },
+  <span class="prop">"background"</span>: {
+    <span class="prop">"service_worker"</span>: <span class="str">"background.js"</span>
+  },
+  <span class="prop">"content_scripts"</span>: [{
+    <span class="prop">"matches"</span>: [<span class="str">"&lt;all_urls&gt;"</span>],
+    <span class="prop">"js"</span>: [<span class="str">"content.js"</span>]
+  }]
+}</pre>
+    </div>
+
+    <div class="doc-list" style="margin-top:14px">
+      <a class="doc-item" href="https://developer.chrome.com/docs/extensions/get-started" target="_blank" rel="noopener">
+        <div class="doc-num">1</div>
+        <div class="doc-body">
+          <h4>Getting Started with Manifest V3</h4>
+          <p>New extension architecture, file structure, and your first working extension in 10 minutes.</p>
+        </div>
+        <div class="doc-meta">
+          <div class="doc-time">~10 min</div>
+          <div class="doc-level lv-beginner">Beginner</div>
+        </div>
+      </a>
+      <a class="doc-item" href="https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts" target="_blank" rel="noopener">
+        <div class="doc-num">2</div>
+        <div class="doc-body">
+          <h4>Content Scripts vs Service Workers</h4>
+          <p>When to use content scripts that run in the page vs background service workers. Includes messaging.</p>
+        </div>
+        <div class="doc-meta">
+          <div class="doc-time">~15 min</div>
+          <div class="doc-level lv-intermediate">Intermediate</div>
+        </div>
+      </a>
+      <a class="doc-item" href="https://developer.chrome.com/docs/extensions/develop/concepts/messaging" target="_blank" rel="noopener">
+        <div class="doc-num">3</div>
+        <div class="doc-body">
+          <h4>Message Passing Between Scripts</h4>
+          <p>How popup, content scripts, and background workers communicate using chrome.runtime.sendMessage.</p>
+        </div>
+        <div class="doc-meta">
+          <div class="doc-time">~20 min</div>
+          <div class="doc-level lv-intermediate">Intermediate</div>
+        </div>
+      </a>
+      <a class="doc-item" href="https://developer.chrome.com/docs/webstore/publish" target="_blank" rel="noopener">
+        <div class="doc-num">4</div>
+        <div class="doc-body">
+          <h4>Publishing to Chrome Web Store</h4>
+          <p>Submission checklist, required assets, privacy policy, and what reviewers actually check.</p>
+        </div>
+        <div class="doc-meta">
+          <div class="doc-time">~12 min</div>
+          <div class="doc-level lv-beginner">Beginner</div>
+        </div>
+      </a>
+      <a class="doc-item" href="https://extensionworkshop.com/documentation/develop/porting-a-google-chrome-extension/" target="_blank" rel="noopener">
+        <div class="doc-num">5</div>
+        <div class="doc-body">
+          <h4>Porting Chrome Extension to Firefox</h4>
+          <p>API differences, manifest changes, and using webextension-polyfill for cross-browser compatibility.</p>
+        </div>
+        <div class="doc-meta">
+          <div class="doc-time">~18 min</div>
+          <div class="doc-level lv-advanced">Advanced</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- OFFICIAL RESOURCES -->
+  <div class="section" id="resources">
+    <div class="section-head">
+      <h2>Official Documentation & Tools</h2>
+      <p>Verified links to browser vendor docs, frameworks and analysis tools</p>
+    </div>
+    <div class="res-grid">
+      <a class="res-card" href="https://developer.chrome.com/docs/extensions/" target="_blank" rel="noopener">
+        <div class="res-type rt-official">Official</div>
+        <h5>Chrome Extension Docs</h5>
+        <p>Full API reference, guides and code samples for Chrome MV3.</p>
+        <div class="res-url">developer.chrome.com ↗</div>
+      </a>
+      <a class="res-card" href="https://extensionworkshop.com/" target="_blank" rel="noopener">
+        <div class="res-type rt-official">Official</div>
+        <h5>Firefox Extension Workshop</h5>
+        <p>Mozilla's hub for building, testing and publishing Firefox add-ons.</p>
+        <div class="res-url">extensionworkshop.com ↗</div>
+      </a>
+      <a class="res-card" href="https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/" target="_blank" rel="noopener">
+        <div class="res-type rt-official">Official</div>
+        <h5>Edge Extensions Docs</h5>
+        <p>Microsoft guide for Chromium-based Edge extensions and Edge-specific APIs.</p>
+        <div class="res-url">learn.microsoft.com ↗</div>
+      </a>
+      <a class="res-card" href="https://wxt.dev/" target="_blank" rel="noopener">
+        <div class="res-type rt-tool">Framework</div>
+        <h5>WXT Framework</h5>
+        <p>TypeScript-first extension framework with HMR and multi-browser build output.</p>
+        <div class="res-url">wxt.dev ↗</div>
+      </a>
+      <a class="res-card" href="https://plasmo.com/" target="_blank" rel="noopener">
+        <div class="res-type rt-tool">Framework</div>
+        <h5>Plasmo Framework</h5>
+        <p>React-based scaffold with live reload, auto-publishing and TypeScript support.</p>
+        <div class="res-url">plasmo.com ↗</div>
+      </a>
+      <a class="res-card" href="https://github.com/nicehash/NiceHashQuickMiner" target="_blank" rel="noopener">
+        <div class="res-type rt-tool">Library</div>
+        <h5>webextension-polyfill</h5>
+        <p>Mozilla's Promise-based polyfill for cross-browser WebExtension APIs.</p>
+        <div class="res-url">github.com/mozilla ↗</div>
+      </a>
+      <a class="res-card" href="https://www.crxcavator.io/" target="_blank" rel="noopener">
+        <div class="res-type rt-tool">Security</div>
+        <h5>CRXcavator</h5>
+        <p>Analyze any extension's security risk score, permissions and third-party code.</p>
+        <div class="res-url">crxcavator.io ↗</div>
+      </a>
+      <a class="res-card" href="https://stackoverflow.com/questions/tagged/google-chrome-extension" target="_blank" rel="noopener">
+        <div class="res-type rt-community">Community</div>
+        <h5>Stack Overflow</h5>
+        <p>42,000+ questions tagged google-chrome-extension. Best place for specific bugs.</p>
+        <div class="res-url">stackoverflow.com ↗</div>
+      </a>
+      <a class="res-card" href="https://www.reddit.com/r/chrome_extensions/" target="_blank" rel="noopener">
+        <div class="res-type rt-community">Community</div>
+        <h5>r/chrome_extensions</h5>
+        <p>Reddit community for extension builders and power users. Show and tell, feedback.</p>
+        <div class="res-url">reddit.com ↗</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- DEV CHECKLIST -->
+  <div class="section" id="tools">
+    <div class="section-head">
+      <h2>Developer Checklist</h2>
+      <p>Everything you need set up to start building extensions</p>
+    </div>
+    <div class="checklist">
+      <div class="cl-item">
+        <span class="cl-icon">🧩</span>
+        <div class="cl-text">
+          <strong>Enable Chrome Developer Mode</strong>
+          <span>chrome://extensions → toggle Developer mode → Load unpacked</span>
+        </div>
+        <a class="cl-link" href="chrome://extensions">Open ↗</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-icon">📦</span>
+        <div class="cl-text">
+          <strong>Install Node.js (for WXT / Plasmo)</strong>
+          <span>Node 18+ required for modern extension frameworks</span>
+        </div>
+        <a class="cl-link" href="https://nodejs.org" target="_blank" rel="noopener">Download ↗</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-icon">⚡</span>
+        <div class="cl-text">
+          <strong>Scaffold with WXT</strong>
+          <span>npx wxt@latest init my-extension — supports TypeScript + React</span>
+        </div>
+        <a class="cl-link" href="https://wxt.dev/get-started/installation.html" target="_blank" rel="noopener">Docs ↗</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-icon">🔒</span>
+        <div class="cl-text">
+          <strong>Register Chrome Web Store Developer Account</strong>
+          <span>One-time $5 fee — required before you can publish</span>
+        </div>
+        <a class="cl-link" href="https://chrome.google.com/webstore/devconsole" target="_blank" rel="noopener">Register ↗</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-icon">🦊</span>
+        <div class="cl-text">
+          <strong>Create AMO Account (Firefox)</strong>
+          <span>Free — addons.mozilla.org developer account to publish to Firefox</span>
+        </div>
+        <a class="cl-link" href="https://addons.mozilla.org/en-US/developers/" target="_blank" rel="noopener">Register ↗</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-icon">🛡</span>
+        <div class="cl-text">
+          <strong>Run CRXcavator on your extension</strong>
+          <span>Check your own extension's permissions profile before publishing</span>
+        </div>
+        <a class="cl-link" href="https://crxcavator.io" target="_blank" rel="noopener">Open ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="section" id="community">
+    <div class="newsletter">
+      <div class="nl-text">
+        <h3>Weekly extension digest 🇧🇩</h3>
+        <p>New extensions, tutorials and dev news — Bangla & English</p>
+      </div>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com">
+        <button class="btn-sm">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="site-footer">
+    <span>© 2025 extension.pro.bd — Made in Bangladesh 🇧🇩</span>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Submit</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function filterExts(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('#extBody tr').forEach(row => {
+    row.style.display = (cat === 'all' || row.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+
+// Nav active state on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navItems.forEach(n => {
+        n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => io.observe(s));
+
+// Search filter
+document.querySelector('.search-wrap input').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  document.querySelectorAll('#extBody tr').forEach(row => {
+    row.style.display = !q || row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+</script>
+</body>
+</html>
